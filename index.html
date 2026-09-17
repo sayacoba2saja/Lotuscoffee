@@ -1,0 +1,1292 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lotus Coffee - Satu Cangkir, Sejuta Cerita</title>
+
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com"></script>
+
+<!-- Phosphor Icons -->
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/bold/style.css">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/fill/style.css">
+
+<!-- AOS Animation -->
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --primary: #db2777;
+    --dark: #831843;
+    --light: #fdf2f8;
+    --accent: #e8b253;
+  }
+
+  * { font-family: 'Plus Jakarta Sans', sans-serif; }
+  .font-display { font-family: 'Marcellus', serif; letter-spacing: 0.02em; }
+
+  body {
+    background: #fff5f9;
+    color: #1f1147;
+    overflow-x: hidden;
+  }
+
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+  .glass {
+    background: rgba(253, 242, 248, 0.75);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border-bottom: 1px solid rgba(219, 39, 119, 0.12);
+  }
+
+  @media (max-width: 767px) {
+    .desktop-only { display: none !important; }
+  }
+  @media (min-width: 768px) {
+    .mobile-only { display: none !important; }
+  }
+
+  /* Hero Slider */
+  .hero-slide {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 1.2s ease-in-out;
+    background-color: #831843;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+  .hero-slide.active { opacity: 1; }
+  .hero-slide video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-18px) rotate(6deg); }
+  }
+  .float-1 { animation: float 6s ease-in-out infinite; }
+  .float-2 { animation: float 8s ease-in-out infinite; animation-delay: 2s; }
+  .float-3 { animation: float 7s ease-in-out infinite; animation-delay: 4s; }
+
+  @keyframes pulse-pink {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(219, 39, 119, 0.7); }
+    50% { box-shadow: 0 0 0 14px rgba(219, 39, 119, 0); }
+  }
+  .pulse-pink { animation: pulse-pink 2s infinite; }
+
+  @keyframes scrollBounce {
+    0%, 100% { transform: translateY(0); opacity: 0.6; }
+    50% { transform: translateY(8px); opacity: 1; }
+  }
+  .scroll-bounce { animation: scrollBounce 2s ease-in-out infinite; }
+
+  @keyframes progressFill {
+    from { width: 0%; }
+    to { width: 100%; }
+  }
+
+  .menu-card {
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.4s ease;
+  }
+  .menu-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 22px 40px -12px rgba(219, 39, 119, 0.28);
+  }
+
+  .nav-item.active {
+    background: linear-gradient(135deg, #db2777, #831843) !important;
+    color: white !important;
+    box-shadow: 0 8px 16px -4px rgba(219, 39, 119, 0.5);
+  }
+  .nav-item.active .nav-icon,
+  .nav-item.active .nav-label {
+    color: white !important;
+  }
+
+  .view { animation: viewFade 0.5s ease; }
+  @keyframes viewFade {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes toastIn {
+    from { transform: translate(-50%, 100px); opacity: 0; }
+    to { transform: translate(-50%, 0); opacity: 1; }
+  }
+  .toast-enter { animation: toastIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
+
+  .pattern-dots {
+    background-image: radial-gradient(circle, rgba(219, 39, 119, 0.18) 1.5px, transparent 1.5px);
+    background-size: 22px 22px;
+  }
+
+  .grad-coffee { background: linear-gradient(135deg, #4a3020 0%, #8b6342 100%); }
+  .grad-choco { background: linear-gradient(135deg, #3e2723 0%, #6d4c41 100%); }
+  .grad-matcha { background: linear-gradient(135deg, #4a6b2a 0%, #8bc34a 100%); }
+  .grad-yakult { background: linear-gradient(135deg, #ff6f00 0%, #ffa726 100%); }
+  .grad-tea { background: linear-gradient(135deg, #bf360c 0%, #ff7043 100%); }
+  .grad-hot { background: linear-gradient(135deg, #b71c1c 0%, #e53935 100%); }
+  .grad-food { background: linear-gradient(135deg, #5d4037 0%, #8d6e63 100%); }
+  .grad-snack { background: linear-gradient(135deg, #e65100 0%, #fb8c00 100%); }
+  .grad-tambahan { background: linear-gradient(135deg, #37474f 0%, #607d8b 100%); }
+
+  .text-gradient {
+    background: linear-gradient(135deg, #db2777, #e8b253);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .btn-add:active { transform: scale(0.92); }
+
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .img-fallback {
+    background: linear-gradient(135deg, #fce7f3 0%, #fbcfe8 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .hero-dot {
+    width: 30px;
+    height: 4px;
+    border-radius: 2px;
+    background: rgba(255, 255, 255, 0.4);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-dot.active {
+    background: rgba(255, 255, 255, 0.3);
+    width: 50px;
+  }
+  .hero-dot.active .dot-progress {
+    animation: progressFill 5s linear forwards;
+  }
+  .hero-dot.video-dot.active .dot-progress {
+    animation: none;
+  }
+  .dot-progress {
+    position: absolute;
+    inset: 0;
+    width: 0%;
+    background: #e8b253;
+    border-radius: 2px;
+  }
+
+  /* INFINITE CAROUSEL - Auto scroll ke kiri */
+  .carousel-container {
+    overflow: hidden;
+    position: relative;
+  }
+  .carousel-track {
+    display: flex;
+    width: max-content;
+    animation: carousel-scroll 30s linear infinite;
+    will-change: transform;
+  }
+  .carousel-track:hover {
+    animation-play-state: paused;
+  }
+  @keyframes carousel-scroll {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+  .carousel-card {
+    flex-shrink: 0;
+    width: 18rem;
+    margin-right: 1.5rem;
+  }
+  @media (min-width: 768px) {
+    .carousel-card {
+      width: 20rem;
+      margin-right: 1.5rem;
+    }
+  }
+
+  <!-- TEXT WRITTER -->
+@keyframes blink {
+  0%,
+  100% {
+    border-color: transparent;
+  }
+  50% {
+    border-color: var(--text-color);
+  }
+}
+
+#typing-text {
+
+  border-right: 0.5px solid rgba(255, 2, 73, 0.393); /* Simulasi kursor yang berkedip */
+  white-space: nowrap;
+  overflow: hidden; /* Agar teks tidak meluap */
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1; /* Pastikan line-height tetap ada */
+  display: inline-block; /* Agar ukuran elemen sesuai dengan teks */
+  min-height: calc(0.6rem * 1.5); /* Menjaga tinggi elemen saat teks belum muncul */
+}
+
+#typing-text {
+  animation: blink 0.7s steps(2) infinite;
+}
+</style>
+</head>
+<body>
+
+<!-- DESKTOP TOP NAVBAR -->
+<nav class="desktop-only fixed top-0 left-0 right-0 z-50 glass">
+  <div class="max-w-7xl mx-auto px-6 py-3 flex items-center justify-between">
+    <div class="flex items-center gap-3 cursor-pointer" onclick="navigateTo('landing')">
+      <div class="w-11 h-11 rounded-full overflow-hidden flex items-center justify-center shadow-lg bg-white">
+        <img src="https://lotuscoffee.store/asset/img/Logo.1.png" alt="Lotus Coffee" class="w-full h-full object-cover" onerror="this.style.display='none'; this.parentElement.innerHTML='<i class=&quot;ph-fill ph-flower text-pink-600 text-2xl&quot;></i>'">
+      </div>
+      <div>
+        <h1 class="font-display text-xl font-bold text-pink-900 leading-none">Lotus Coffee</h1>
+        <p class="text-[11px] text-pink-600 mt-0.5">Satu Cangkir, Sejuta Cerita</p>
+      </div>
+    </div>
+
+    <div class="flex items-center gap-7">
+      <button onclick="navigateTo('landing')" class="text-pink-900 hover:text-pink-600 font-semibold text-sm transition">Beranda</button>
+      <button onclick="navToSection('about')" class="text-pink-900 hover:text-pink-600 font-semibold text-sm transition">Tentang</button>
+      <button onclick="navigateTo('catalog')" class="text-pink-900 hover:text-pink-600 font-semibold text-sm transition">Menu</button>
+
+      <button onclick="navigateTo('cart')" class="relative bg-pink-600 hover:bg-pink-700 text-white px-5 py-2.5 rounded-full flex items-center gap-2 font-semibold text-sm transition shadow-lg shadow-pink-200">
+        <i class="ph-fill ph-shopping-cart text-lg"></i>
+        <span>Pesanan</span>
+        <span id="cart-count-desktop" class="absolute -top-2 -right-2 text-pink-900 text-[11px] font-bold w-6 h-6 rounded-full flex items-center justify-center shadow" style="background: #e8b253;">0</span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- MOBILE BOTTOM NAVBAR -->
+<nav class="mobile-only fixed bottom-0 left-0 right-0 z-50 px-3 pb-3">
+  <div class="bg-pink-50/95 backdrop-blur-xl rounded-3xl shadow-2xl border border-pink-200/60 px-2 py-2">
+    <div class="grid grid-cols-4 gap-1">
+      <button onclick="navigateTo('landing', this)" data-nav="landing" class="nav-item flex flex-col items-center gap-0.5 py-2 px-1 rounded-2xl transition">
+        <i class="ph-fill ph-house nav-icon text-[22px] text-pink-900"></i>
+        <span class="nav-label text-[10px] text-pink-900 font-semibold">Beranda</span>
+      </button>
+      <button onclick="navToSection('about', this)" data-nav="about" class="nav-item flex flex-col items-center gap-0.5 py-2 px-1 rounded-2xl transition">
+        <i class="ph-fill ph-info nav-icon text-[22px] text-pink-900"></i>
+        <span class="nav-label text-[10px] text-pink-900 font-semibold">Tentang</span>
+      </button>
+      <button onclick="navigateTo('catalog', this)" data-nav="catalog" class="nav-item flex flex-col items-center gap-0.5 py-2 px-1 rounded-2xl transition">
+        <i class="ph-fill ph ph-article nav-icon text-[22px] text-pink-900"></i>
+        <span class="nav-label text-[10px] text-pink-900 font-semibold">Menu</span>
+      </button>
+      <button onclick="navigateTo('cart', this)" data-nav="cart" class="nav-item relative flex flex-col items-center gap-0.5 py-2 px-1 rounded-2xl transition">
+        <i class="ph-fill ph-shopping-cart nav-icon text-[22px] text-pink-900"></i>
+        <span class="nav-label text-[10px] text-pink-900 font-semibold">Pesanan</span>
+        <span id="cart-count-mobile" class="absolute top-1 right-1 bg-pink-600 text-white text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center">0</span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<main>
+
+  <!-- LANDING VIEW -->
+  <div id="view-landing" class="view">
+
+    <!-- HERO SECTION DENGAN IMAGE/VIDEO SLIDER -->
+    <section class="relative min-h-screen flex items-center justify-center overflow-hidden bg-pink-900">
+      <div id="hero-slider" class="absolute inset-0 z-0"></div>
+
+      <div class="absolute inset-0 z-10 bg-gradient-to-br from-pink-900/90 via-pink-800/75 to-yellow-700/50 pointer-events-none"></div>
+
+      <div class="absolute inset-0 z-10 pointer-events-none" style="background: radial-gradient(circle at 30% 40%, rgba(232, 178, 83, 0.18) 0%, transparent 50%);"></div>
+
+      <div class="absolute top-20 left-6 md:left-16 text-white/15 text-8xl md:text-9xl float-1 pointer-events-none z-10">
+        <i class="ph-fill ph-coffee"></i>
+      </div>
+      <div class="absolute bottom-32 right-6 md:right-16 text-white/15 text-7xl md:text-8xl float-2 pointer-events-none z-10">
+        <i class="ph-fill ph-flower"></i>
+      </div>
+      <div class="absolute top-1/3 right-1/4 text-white/10 text-5xl md:text-6xl float-3 pointer-events-none z-10">
+        <i class="ph-fill ph-leaf"></i>
+      </div>
+
+      <div class="relative z-20 text-center text-white px-6 max-w-4xl">
+        <div data-aos="fade-down" class="inline-flex items-center gap-2 bg-white/0 backdrop-blur-md border border-white/25 px-4 py-1.5 rounded-full mb-6">
+          <i style="display: none;" class="ph-fill ph-star text-yellow-300"></i>
+          <span id="typing-text" class="text-lg text-gradient font-extrabold">LOTUS COFFEE</span>
+          
+        </div>
+
+        <h1 data-aos="fade-up" class="font-display text-4xl md:text-7xl lg:text-8xl font-bold mb-6 leading-[1.05]">
+          Sip Your Favorite,<br>
+          <span class="text-yellow-300">Enjoy Every Bite</span>
+        </h1>
+
+        <p data-aos="fade-up" data-aos-delay="200" class="text-base md:text-xl text-white/90 mb-9 max-w-2xl mx-auto leading-relaxed">
+          (CONTOH)) <br> kini hadir sebagai Lotus Coffee — tempat di mana setiap tegukan menyimpan cerita.
+        </p>
+
+        <div data-aos="fade-up" data-aos-delay="400" class="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center items-center">
+          <button onclick="navigateTo('catalog')" class="bg-white text-pink-900 font-bold px-8 py-4 rounded-full hover:scale-105 hover:bg-pink-50 transition flex items-center gap-2 shadow-2xl">
+            <i class="ph-fill ph-mug-saucer text-xl"></i>
+            Lihat Menu
+          </button>
+          <button onclick="navToSection('location')" class="bg-pink-600/30 backdrop-blur-md border-2 border-white/40 text-white font-bold px-8 py-4 rounded-full hover:bg-pink-600/50 hover:border-white/60 transition flex items-center gap-2">
+            <i class="ph-fill ph-map-pin text-xl"></i>
+            Kunjungi Kami
+          </button>
+        </div>
+
+        <div style="display: none;" data-aos="fade-up" data-aos-delay="600" class="grid grid-cols-3 gap-4 md:gap-8 mt-16 max-w-2xl mx-auto">
+          <div class="text-center">
+            <div class="text-2xl md:text-4xl font-bold font-display">24/7</div>
+            <div class="text-xs md:text-sm text-white/70 mt-1">Buka Akhir Pekan</div>
+          </div>
+          <div class="text-center border-x border-white/20">
+            <div class="text-2xl md:text-4xl font-bold font-display">50+</div>
+            <div class="text-xs md:text-sm text-white/70 mt-1">Pilihan Menu</div>
+          </div>
+          <div class="text-center">
+            <div class="text-2xl md:text-4xl font-bold font-display">5.0</div>
+            <div class="text-xs md:text-sm text-white/70 mt-1">Rating Pelanggan</div>
+          </div>
+        </div>
+      </div>
+
+      <div id="hero-indicators" class="absolute bottom-2 md:bottom-2 left-1/2 -translate-x-1/2 z-30 flex gap-2 items-center"></div>
+
+      <button onclick="prevHeroSlide()" class="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 z-30 w-10 h-10 md:w-12 md:h-12 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white hover:bg-white/20 transition flex items-center justify-center">
+        <i class="ph-bold ph-caret-left text-xl"></i>
+      </button>
+      <button onclick="nextHeroSlide()" class="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 z-30 w-10 h-10 md:w-12 md:h-12 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white hover:bg-white/20 transition flex items-center justify-center">
+        <i class="ph-bold ph-caret-right text-xl"></i>
+      </button>
+
+      <div class="absolute bottom-8 left-1/2 -translate-x-1/2 text-white/60 scroll-bounce hidden md:block z-30">
+        <i class="ph-bold ph-caret-down text-2xl"></i>
+      </div>
+    </section>
+
+    <!-- CATEGORIES & RECOMMENDED - AUTO CAROUSEL -->
+    <section class="py-16 md:py-24 px-4 md:px-8 bg-gradient-to-b from-white to-pink-50">
+      <div class="max-w-7xl mx-auto">
+        <div data-aos="fade-up" class="text-center mb-12">
+          <span class="text-pink-600 font-semibold text-xs md:text-sm tracking-widest uppercase">Rekomendasi Barista</span>
+          <h2 class="font-display text-4xl md:text-5xl font-bold text-pink-900 mt-2">Pilihan Terbaik Kami</h2>
+          <p class="text-gray-600 mt-3 text-sm md:text-base">Menu yang paling diminati oleh para penikmat</p>
+        </div>
+
+        <!-- Category Chips -->
+        <div data-aos="fade-up" class="mb-10 overflow-x-auto no-scrollbar">
+          <div class="flex gap-2 md:gap-3 px-4 pb-2 min-w-min justify-start md:justify-center">
+            <button onclick="filterCategory(this, 'all')" class="cat-chip active px-5 py-2 rounded-full bg-pink-600 text-white text-sm font-medium whitespace-nowrap transition shadow">Semua</button>
+            <button onclick="filterCategory(this, 'kopi')" class="cat-chip px-5 py-2 rounded-full bg-white border border-pink-200 text-pink-900 text-sm font-medium whitespace-nowrap hover:bg-pink-100 transition">Kopi</button>
+            <button onclick="filterCategory(this, 'non-kopi')" class="cat-chip px-5 py-2 rounded-full bg-white border border-pink-200 text-pink-900 text-sm font-medium whitespace-nowrap hover:bg-pink-100 transition">Non-Kopi</button>
+            <button onclick="filterCategory(this, 'makanan')" class="cat-chip px-5 py-2 rounded-full bg-white border border-pink-200 text-pink-900 text-sm font-medium whitespace-nowrap hover:bg-pink-100 transition">Makanan</button>
+            <button onclick="filterCategory(this, 'cemilan')" class="cat-chip px-5 py-2 rounded-full bg-white border border-pink-200 text-pink-900 text-sm font-medium whitespace-nowrap hover:bg-pink-100 transition">Cemilan</button>
+            <button onclick="filterCategory(this, 'matcha')" class="cat-chip px-5 py-2 rounded-full bg-white border border-pink-200 text-pink-900 text-sm font-medium whitespace-nowrap hover:bg-pink-100 transition">Matcha</button>
+            <button onclick="filterCategory(this, 'tea')" class="cat-chip px-5 py-2 rounded-full bg-white border border-pink-200 text-pink-900 text-sm font-medium whitespace-nowrap hover:bg-pink-100 transition">Tea</button>
+          </div>
+        </div>
+
+        <!-- AUTO INFINITE CAROUSEL -->
+        <div data-aos="fade-up" class="carousel-container">
+          <div id="recom-track" class="carousel-track"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about" class="py-16 md:py-24 px-4 md:px-8 bg-white">
+      <div class="max-w-7xl mx-auto">
+        <div class="grid md:grid-cols-2 gap-10 md:gap-12 items-center">
+          <div data-aos="fade-right" class="grid grid-cols-2 gap-3 md:gap-4">
+            <div class="space-y-3 md:space-y-4">
+              <div class="rounded-2xl md:rounded-3xl overflow-hidden shadow-lg h-48 md:h-64 img-fallback">
+                <img src="https://lotuscoffee.store/asset/img/12.jpg" alt="Lotus Coffee Interior" class="w-full h-full object-cover hover:scale-105 transition duration-700" onerror="this.style.display='none'">
+              </div>
+              <div class="rounded-2xl md:rounded-3xl overflow-hidden shadow-lg h-36 md:h-48 img-fallback">
+                <img src="https://lotuscoffee.store/asset/img/13.jpg" alt="Coffee Detail" class="w-full h-full object-cover hover:scale-105 transition duration-700" onerror="this.style.display='none'">
+              </div>
+            </div>
+            <div class="space-y-3 md:space-y-4 pt-3 md:pt-8">
+              <div class="rounded-2xl md:rounded-3xl overflow-hidden shadow-lg h-36 md:h-48 img-fallback">
+                <img src="https://lotuscoffee.store/asset/img/11.jpg" alt="Lotus Coffee Drink" class="w-full h-full object-cover hover:scale-105 transition duration-700" onerror="this.style.display='none'">
+              </div>
+              <div class="rounded-2xl md:rounded-3xl bg-gradient-to-br from-pink-600 to-pink-900 p-5 md:p-6 text-white h-48 md:h-64 flex flex-col justify-center shadow-lg">
+                <i class="ph-fill ph-quote text-3xl md:text-4xl text-yellow-300 mb-2"></i>
+                <p class="font-display text-base md:text-lg italic leading-snug">"Dari warung kecil, lahir kopi yang bercerita."</p>
+                <p class="text-xs md:text-sm text-pink-200 mt-3">— Pendiri Lotus Coffee</p>
+              </div>
+            </div>
+          </div>
+
+          <div data-aos="fade-left">
+            <span class="text-pink-600 font-semibold text-xs md:text-sm tracking-widest uppercase">Tentang Kami</span>
+            <h2 class="font-display text-4xl md:text-5xl font-bold text-pink-900 mt-2 mb-6 leading-tight">Lotus Coffee</h2>
+            
+            <p class="text-gray-700 mb-8 leading-relaxed text-sm md:text-base">
+              Kini, kami hadir sebagai <strong class="text-pink-700">Lotus Coffee</strong> — dengan semangat yang sama, namun tampilan baru. Berkomitmen menyajikan kopi berkualitas dari biji lokal Indonesia, suasananya tetap hangat dan ramah, seperti rumah sendiri.
+            </p>
+
+            <div class="grid grid-cols-3 gap-3 md:gap-4">
+              <div class="text-center p-3 md:p-4 bg-pink-50 rounded-2xl border border-pink-100">
+                <i class="ph-fill ph-wifi-high text-pink-600 text-2xl md:text-3xl mb-2"></i>
+                <div class="text-xs md:text-sm font-semibold text-pink-900">FREE WIFI</div>
+              </div>
+              <div class="text-center p-3 md:p-4 bg-pink-50 rounded-2xl border border-pink-100">
+                <i class="ph-fill ph-leaf text-pink-600 text-2xl md:text-3xl mb-2"></i>
+                <div class="text-xs md:text-sm font-semibold text-pink-900">NATURAL</div>
+              </div>
+              <div class="text-center p-3 md:p-4 bg-pink-50 rounded-2xl border border-pink-100">
+                <i class="ph-fill ph-clock text-pink-600 text-2xl md:text-3xl mb-2"></i>
+                <div class="text-xs md:text-sm font-semibold text-pink-900">EVERYDAY</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- LOCATION -->
+    <section id="location" class="py-16 md:py-24 px-4 md:px-8 bg-pink-50">
+      <div class="max-w-7xl mx-auto">
+        <div data-aos="fade-up" class="text-center mb-12">
+          <span class="text-pink-600 font-semibold text-xs md:text-sm tracking-widest uppercase">Lokasi Kami</span>
+          <h2 class="font-display text-4xl md:text-5xl font-bold text-pink-900 mt-2">Temukan Lotus Coffee</h2>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-6 md:gap-8 items-stretch">
+          <div data-aos="fade-right" class="relative rounded-3xl overflow-hidden shadow-2xl h-80 md:h-full min-h-[400px] bg-gradient-to-br from-pink-200 via-pink-100 to-yellow-100">
+            <div class="absolute inset-0 pattern-dots opacity-60"></div>
+
+            <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d198.70725228505773!2d109.95382189844727!3d0.38138940313665237!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31fd16291bf8d7a3%3A0xc3eb5c8b409b51de!2s9XJ3%2BHF9%2C%20Hilir%20Ktr.%2C%20Kec.%20Ngabang%2C%20Kabupaten%20Landak%2C%20Kalimantan%20Barat%2079357%2C%20Indonesia!5e1!3m2!1sid!2sus!4v1789643838567!5m2!1sid!2sus" width="400" height="400" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+
+            <div class="absolute inset-0 flex flex-col items-center justify-center p-8">
+              <div class="relative">
+                <div class="absolute inset-0 bg-pink-600 rounded-full pulse-pink"></div>
+                <div class="relative w-20 h-20 rounded-full overflow-hidden bg-white shadow-2xl border-4 border-white">
+                  <img src="https://lotuscoffee.store/asset/img/Logo.1.png" alt="Lotus Coffee" class="w-full h-full object-cover" onerror="this.style.display='none'; this.parentElement.innerHTML='<i class=&quot;ph-fill ph-flower text-pink-600 text-3xl&quot; style=&quot;display:flex;align-items:center;justify-content:center;height:100%&quot;></i>'">
+                </div>
+                <div class="absolute -bottom-3 left-1/2 -translate-x-1/2 w-5 h-5 bg-pink-900 rotate-45 border-r-4 border-b-4 border-white"></div>
+              </div>
+              <p class="mt-10 font-display text-xl md:text-2xl text-pink-900 font-bold">Lotus Coffee</p>
+              <p class="text-pink-600 text-sm">Ngabang, Landak</p>
+            </div>
+
+            <div class="absolute top-4 left-4 bg-white/80 backdrop-blur-md px-3 py-1.5 rounded-full text-xs font-semibold text-pink-900 flex items-center gap-1">
+              <i class="ph-fill ph-compass text-pink-600"></i> Peta Lokasi
+            </div>
+            <div class="absolute bottom-4 right-4 bg-pink-900 text-white px-3 py-1.5 rounded-full text-xs font-semibold flex items-center gap-1">
+              <i class="ph-fill ph-clock"></i> Buka 24 Jam
+            </div>
+          </div>
+
+          <div data-aos="fade-left" class="space-y-4">
+            <div class="bg-white rounded-3xl p-5 md:p-6 shadow-lg border border-pink-100 hover:shadow-xl transition">
+              <div class="flex items-start gap-4">
+                <div class="w-12 h-12 rounded-2xl bg-pink-100 flex items-center justify-center flex-shrink-0">
+                  <i class="ph-fill ph-map-pin text-pink-600 text-2xl"></i>
+                </div>
+                <div class="flex-1">
+                  <h3 class="font-bold text-pink-900 text-lg">Alamat</h3>
+                  <p class="text-gray-600 mt-1 text-sm">📍Jl. Tungkul, Ngabang (Samping Cakrawala dan CU Semarong)</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="bg-white rounded-3xl p-5 md:p-6 shadow-lg border border-pink-100 hover:shadow-xl transition">
+              <div class="flex items-start gap-4">
+                <div class="w-12 h-12 rounded-2xl bg-pink-100 flex items-center justify-center flex-shrink-0">
+                  <i class="ph-fill ph-instagram-logo text-pink-600 text-2xl"></i>
+                </div>
+                <div class="flex-1">
+                  <h3 class="font-bold text-pink-900 text-lg">Instagram</h3>
+                  <a href="https://www.instagram.com/lotuscoffeeofficial_/" target="_blank" class="text-pink-600 hover:underline mt-1 block text-sm">@lotus.coffee</a>
+                </div>
+              </div>
+            </div>
+
+            <div class="bg-white rounded-3xl p-5 md:p-6 shadow-lg border border-pink-100 hover:shadow-xl transition">
+              <div class="flex items-start gap-4">
+                <div class="w-12 h-12 rounded-2xl bg-pink-100 flex items-center justify-center flex-shrink-0">
+                  <i class="ph-fill ph-clock text-pink-600 text-2xl"></i>
+                </div>
+                <div class="flex-1">
+                  <h3 class="font-bold text-pink-900 text-lg">Jam Buka</h3>
+                  <p class="text-gray-600 mt-1 text-sm">OPEN EVERYDAY</p>
+                  <p class="text-pink-600 font-semibold mt-1 text-sm">
+09.00AM - 00.00AM</p>
+                </div>
+              </div>
+            </div>
+
+            <a href="https://maps.app.goo.gl/TJ84bqxoUQioycuj8" target="_blank" class="block bg-pink-600 hover:bg-pink-700 text-white text-center font-bold py-4 rounded-2xl transition shadow-lg">
+              <i class="ph-fill ph-arrow-up mr-2"></i> Buka di Google Maps
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- CATALOG VIEW -->
+  <div id="view-catalog" class="view hidden">
+    <div class="pt-4 md:pt-28 pb-32 md:pb-16 px-4 md:px-8 min-h-screen">
+      <div class="max-w-7xl mx-auto">
+        <div data-aos="fade-down" class="text-center mb-8 md:mb-10">
+          <span class="text-pink-600 font-semibold text-xs md:text-sm tracking-widest uppercase">Daftar Menu</span>
+          <h2 class="font-display text-4xl md:text-5xl font-bold text-pink-900 mt-2">Katalog Lengkap</h2>
+          <p class="text-gray-600 mt-3 text-sm md:text-base">Pilih menu favorit dan tambahkan ke keranjang</p>
+        </div>
+
+        <div class="mb-6 relative max-w-xl mx-auto">
+          <i class="ph-fill ph-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-pink-400 text-xl"></i>
+          <input type="text" id="search-input" placeholder="Cari menu..." class="w-full pl-12 pr-4 py-3 rounded-full border-2 border-pink-100 focus:border-pink-500 focus:outline-none bg-white text-sm md:text-base shadow-sm">
+        </div>
+
+        <div class="mb-8 overflow-x-auto no-scrollbar">
+          <div class="flex gap-2 px-4 pb-2 min-w-min justify-start md:justify-center">
+            <button onclick="filterCatalog(this, 'all')" class="cat-filter active px-4 py-2 rounded-full bg-pink-600 text-white text-sm font-medium whitespace-nowrap transition shadow">Semua</button>
+            <button onclick="filterCatalog(this, 'makanan')" class="cat-filter px-4 py-2 rounded-full bg-white border border-pink-200 text-pink-900 text-sm font-medium whitespace-nowrap hover:bg-pink-100 transition">Makanan</button>
+            <button onclick="filterCatalog(this, 'cemilan')" class="cat-filter px-4 py-2 rounded-full bg-white border border-pink-200 text-pink-900 text-sm font-medium whitespace-nowrap hover:bg-pink-100 transition">Cemilan</button>
+            <button onclick="filterCatalog(this, 'coffee')" class="cat-filter px-4 py-2 rounded-full bg-white border border-pink-200 text-pink-900 text-sm font-medium whitespace-nowrap hover:bg-pink-100 transition">Coffee</button>
+            <button onclick="filterCatalog(this, 'choco')" class="cat-filter px-4 py-2 rounded-full bg-white border border-pink-200 text-pink-900 text-sm font-medium whitespace-nowrap hover:bg-pink-100 transition">Chocolate</button>
+            <button onclick="filterCatalog(this, 'matcha')" class="cat-filter px-4 py-2 rounded-full bg-white border border-pink-200 text-pink-900 text-sm font-medium whitespace-nowrap hover:bg-pink-100 transition">Matcha</button>
+            <button onclick="filterCatalog(this, 'yakult')" class="cat-filter px-4 py-2 rounded-full bg-white border border-pink-200 text-pink-900 text-sm font-medium whitespace-nowrap hover:bg-pink-100 transition">Squash & Yakult</button>
+            <button onclick="filterCatalog(this, 'tea')" class="cat-filter px-4 py-2 rounded-full bg-white border border-pink-200 text-pink-900 text-sm font-medium whitespace-nowrap hover:bg-pink-100 transition">Tea</button>
+            <button onclick="filterCatalog(this, 'hot')" class="cat-filter px-4 py-2 rounded-full bg-white border border-pink-200 text-pink-900 text-sm font-medium whitespace-nowrap hover:bg-pink-100 transition">Hot</button>
+            <button onclick="filterCatalog(this, 'tambahan')" class="cat-filter px-4 py-2 rounded-full bg-white border border-pink-200 text-pink-900 text-sm font-medium whitespace-nowrap hover:bg-pink-100 transition">Tambahan</button>
+          </div>
+        </div>
+
+        <div id="menu-grid" class="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-5"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CART VIEW -->
+  <div id="view-cart" class="view hidden">
+    <div class="pt-4 md:pt-28 pb-32 md:pb-16 px-4 md:px-8 min-h-screen">
+      <div class="max-w-4xl mx-auto">
+        <div data-aos="fade-down" class="text-center mb-8 md:mb-10">
+          <span class="text-pink-600 font-semibold text-xs md:text-sm tracking-widest uppercase">Pesanan Anda</span>
+          <h2 class="font-display text-4xl md:text-5xl font-bold text-pink-900 mt-2">Keranjang</h2>
+        </div>
+
+        <div id="empty-cart" class="text-center py-16 md:py-20">
+          <div class="w-28 h-28 md:w-32 md:h-32 mx-auto rounded-full bg-pink-50 flex items-center justify-center mb-6">
+            <i class="ph ph-shopping-cart text-pink-300 text-6xl md:text-7xl"></i>
+          </div>
+          <h3 class="font-display text-2xl font-bold text-pink-900 mb-2">Keranjang Kosong</h3>
+          <p class="text-gray-500 mb-6 text-sm">Yuk pilih menu favorit dulu!</p>
+          <button onclick="navigateTo('catalog')" class="bg-pink-600 hover:bg-pink-700 text-white font-bold px-6 py-3 rounded-full transition inline-flex items-center gap-2 shadow-lg">
+            <i class="ph-fill ph-mug-saucer"></i> Lihat Menu
+          </button>
+        </div>
+
+        <div id="cart-content" class="hidden grid md:grid-cols-3 gap-6 md:gap-8">
+          <div class="md:col-span-2 space-y-3">
+            <div id="cart-items" class="space-y-3"></div>
+          </div>
+
+          <div class="md:col-span-1">
+            <div class="bg-white rounded-3xl p-5 md:p-6 shadow-lg border border-pink-100 sticky top-28">
+              <h3 class="font-display text-xl font-bold text-pink-900 mb-4">Ringkasan Pesanan</h3>
+
+              <div class="space-y-2 mb-4">
+                <div class="flex justify-between text-gray-700 text-sm">
+                  <span>Subtotal</span>
+                  <span id="subtotal" class="font-semibold">Rp 0</span>
+                </div>
+                <div class="flex justify-between text-gray-700 text-sm">
+                  <span>PPN (10%)</span>
+                  <span id="tax" class="font-semibold">Rp 0</span>
+                </div>
+              </div>
+
+              <hr class="border-pink-100 my-4">
+
+              <div class="flex justify-between text-lg font-bold text-pink-900 mb-5">
+                <span>Total</span>
+                <span id="total">Rp 0</span>
+              </div>
+
+              <div class="mb-4">
+                <label class="text-sm font-medium text-pink-900 mb-2 block">Catatan Pesanan</label>
+                <textarea id="order-notes" placeholder="Contoh: Less sugar, no ice, dll..." class="w-full p-3 rounded-2xl border-2 border-pink-100 focus:border-pink-500 focus:outline-none text-sm resize-none" rows="3"></textarea>
+              </div>
+
+              <button onclick="checkout()" class="w-full bg-pink-600 hover:bg-pink-700 text-white font-bold py-4 rounded-2xl transition flex items-center justify-center gap-2 shadow-lg">
+                <i class="ph-fill ph-whatsapp-logo text-xl"></i> Kirim Pesanan
+              </button>
+
+              <button onclick="navigateTo('catalog')" class="w-full mt-3 text-pink-900 font-medium py-2 hover:text-pink-600 transition text-sm">
+                + Tambah Pesanan Lain
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<!-- FOOTER -->
+<footer class="bg-pink-900 text-white pt-14 md:pt-16 pb-32 md:pb-12 px-4 md:px-8">
+  <div class="max-w-7xl mx-auto">
+    <div class="grid md:grid-cols-4 gap-8 mb-10">
+      <div class="md:col-span-2">
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-12 h-12 rounded-full overflow-hidden bg-white flex items-center justify-center">
+            <img src="https://lotuscoffee.store/asset/img/Logo.1.png" alt="Lotus Coffee" class="w-full h-full object-cover" onerror="this.style.display='none'; this.parentElement.innerHTML='<i class=&quot;ph-fill ph-flower text-pink-600 text-2xl&quot;></i>'">
+          </div>
+          <div>
+            <h3 class="font-display text-2xl font-bold">Lotus Coffee</h3>
+            <p class="text-pink-200 text-sm">Satu Cangkir, Sejuta Cerita</p>
+          </div>
+        </div>
+        <p class="text-pink-100 max-w-md leading-relaxed mb-4 text-sm">
+          Tempat berkumpul, bercerita, dan menikmati Kota Ngabang.
+        </p>
+        <div class="flex gap-3">
+          <a href="https://instagram.com/lotus.coffee" target="_blank" class="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition">
+            <i class="ph-fill ph-instagram-logo text-xl"></i>
+          </a>
+          <a href="https://wa.me/6285751446110" target="_blank" class="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition">
+            <i class="ph-fill ph-whatsapp-logo text-xl"></i>
+          </a>
+          <a href="#" class="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition">
+            <i class="ph-fill ph-facebook-logo text-xl"></i>
+          </a>
+        </div>
+      </div>
+
+      <div>
+        <h4 class="font-bold mb-4">Navigasi</h4>
+        <ul class="space-y-2 text-pink-100 text-sm">
+          <li><button onclick="navigateTo('landing')" class="hover:text-white transition">Beranda</button></li>
+          <li><button onclick="navToSection('about')" class="hover:text-white transition">Tentang Kami</button></li>
+          <li><button onclick="navigateTo('catalog')" class="hover:text-white transition">Menu</button></li>
+          <li><button onclick="navigateTo('cart')" class="hover:text-white transition">Pesanan</button></li>
+        </ul>
+      </div>
+
+      <div style="display: none;">
+        <h4 class="font-bold mb-4">Kontak</h4>
+        <ul class="space-y-3 text-pink-100 text-sm">
+          <li class="flex items-start gap-2">
+            <i class="ph-fill ph-map-pin mt-1 flex-shrink-0"></i>
+            <span>Jl. Martalaya No.32, Ngabang, Landak, Kalbar</span>
+          </li>
+          <li class="flex items-center gap-2">
+            <i class="ph-fill ph-whatsapp-logo"></i>
+            <span>+62 857-5144-6110</span>
+          </li>
+          <li class="flex items-center gap-2">
+            <i class="ph-fill ph-instagram-logo"></i>
+            <span>@lotus.coffee</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="border-t border-white/10 pt-6 text-center text-pink-200 text-xs md:text-sm">
+      <p>© 2026 Lotus Coffee. Ngabang, Landak.</p>
+    </div>
+  </div>
+</footer>
+
+<!-- TOAST -->
+<div id="toast" class="fixed top-20 md:top-24 left-1/2 -translate-x-1/2 z-[100] hidden">
+  <div class="bg-pink-900 text-white px-5 py-3 rounded-2xl shadow-2xl flex items-center gap-3 border border-pink-700">
+    <i class="ph-fill ph-check-circle text-yellow-300 text-2xl"></i>
+    <span id="toast-msg" class="font-medium text-sm">Item ditambahkan!</span>
+  </div>
+</div>
+
+<script>
+// ============================================
+// HERO SLIDER DATA
+// ============================================
+const heroSlides = [
+  { type: 'image', src: 'https://lotuscoffee.store/asset/img/Logo.2.png', duration: 5000 },
+  { type: 'video', src: 'https://lotuscoffee.store/asset/vid/Vid2.mp4' },
+  { type: 'image', src: 'https://instagram.fpnk3-1.fna.fbcdn.net/v/t51.82787-15/765007876_18093820115146124_4321789750176594948_n.webp?_nc_cat=104&ig_cache_key=Mzk1Njg1MDA2NzgzNTI1NDIxOA%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkZFRUQueHBpZHMuMTQ0MC5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=tUetnTgkdNUQ7kNvwFfIX5I&_nc_oc=Adpr-7Ztw3Tu9l02mgy1Qr2SSs7BexJv__I3mrRHmy0ByxXMlzvnMiOWBJcSrZtYLSwaMzFt3JtmRY8xPIhsPxrI&_nc_ad=z-m&_nc_cid=1225&_nc_zt=23&_nc_ht=instagram.fpnk3-1.fna&_nc_gid=cSw2rYRdTC1pq-kxIEw_3Q&_nc_ss=7a22e&oh=00_AQIzFyWE-syDgA4bTTlOH25ShsoJzDiGNXehebTZq5-XAA&oe=6AB18E4C', duration: 5000 },
+  { type: 'image', src: 'https://instagram.fpnk3-1.fna.fbcdn.net/v/t51.82787-15/774512077_18094896455146124_173483421485485891_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=102&ig_cache_key=Mzk2Mjc3NjQ2Nzg1MDgyNDEwOQ%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkNBUk9VU0VMX0lURU0ueHBpZHMuMTA4Ni5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=krcr-ERnwloQ7kNvwHE6mWv&_nc_oc=Ado_pksNZ0u67pMhDUuOboIPYTFTyWJTISqnV17SfV-_Y8jGLVMJi9CU2A0Tpirm35rtWqze3wa-v_AQgGBTOMvi&_nc_ad=z-m&_nc_cid=1225&_nc_zt=23&_nc_ht=instagram.fpnk3-1.fna&_nc_gid=cSw2rYRdTC1pq-kxIEw_3Q&_nc_ss=7a22e&oh=00_AQKVDmAB-HoDzil7u14HF6PBzWxTtgD6xqb0_QhNGNfqsQ&oe=6AB1AD54', duration: 5000 },
+  { type: 'image', src: 'https://instagram.fpnk3-1.fna.fbcdn.net/v/t51.82787-15/773724370_18094896464146124_4373112044376149584_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=100&ig_cache_key=Mzk2Mjc3NjQ2ODExOTA5NzI5NA%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkNBUk9VU0VMX0lURU0ueHBpZHMuMTA4Ni5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=50wOHMdWprcQ7kNvwGTKQtc&_nc_oc=Ado_EdvpxYVts0-9dUE6ztC8TMDzt-p327bB0YAnptM5MsJpc9KTia_cFDGUH0bAtoGZv0OY_3GSOynndmmr4Dqn&_nc_ad=z-m&_nc_cid=1225&_nc_zt=23&_nc_ht=instagram.fpnk3-1.fna&_nc_gid=cSw2rYRdTC1pq-kxIEw_3Q&_nc_ss=7a22e&oh=00_AQJ_VN9Z0-6cci4tjRWS2Gznyr81TLWct62q3SrbwwG2Wg&oe=6AB17CF6', duration: 5000 },
+  { type: 'image', src: 'https://instagram.fpnk3-1.fna.fbcdn.net/v/t51.82787-15/773271018_18094896473146124_8092617406436524641_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=107&ig_cache_key=Mzk2Mjc3NjQ2OTk5MjA5NzIzNw%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkNBUk9VU0VMX0lURU0ueHBpZHMuMTI1NC5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=3c6A61OftgQQ7kNvwFuc-KZ&_nc_oc=Adr4HmdRb7uVInH1LFQ5ATeC6jAIx6UiYRs8e5HmNtVBL5HZ0qq4Q5nlQ7nNmPnZeVkxt04UktSptsuU_MbH9a2h&_nc_ad=z-m&_nc_cid=1225&_nc_zt=23&_nc_ht=instagram.fpnk3-1.fna&_nc_gid=cSw2rYRdTC1pq-kxIEw_3Q&_nc_ss=7a22e&oh=00_AQKi9eVo9YJVv0Gbb0HFRNDsamQzcJBhoaU89EUeB-I2Ow&oe=6AB196B0', duration: 5000 },
+  { type: 'image', src: 'https://instagram.fpnk3-1.fna.fbcdn.net/v/t51.82787-15/774287644_18094896494146124_4155629254968155235_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=109&ig_cache_key=Mzk2Mjc3NjQ2OTg4NTAwNTUzNA%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkNBUk9VU0VMX0lURU0ueHBpZHMuMTI1NC5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=wRwusgmnPf4Q7kNvwHE7HlN&_nc_oc=AdomNUpM7znaAz1_ZNKXpxLBvsB0_8aGiwsNzlUqKtATUR9r8Ljo6tjciM3EfraZdVD-yl87TJhtUX5FpJkF5XIM&_nc_ad=z-m&_nc_cid=1225&_nc_zt=23&_nc_ht=instagram.fpnk3-1.fna&_nc_gid=cSw2rYRdTC1pq-kxIEw_3Q&_nc_ss=7a22e&oh=00_AQJIvYUQgYoMrJnl2kmnnUTDKovDhrUoRmgx4smva2caSA&oe=6AB1884D', duration: 5000 },
+  
+];
+
+let currentHeroSlide = 0;
+let heroSlideTimer = null;
+let heroVideoListener = null;
+
+function initHeroSlider() {
+  const slider = document.getElementById('hero-slider');
+  const indicators = document.getElementById('hero-indicators');
+  if (!slider || !indicators) return;
+
+  slider.innerHTML = heroSlides.map((slide, i) => {
+    if (slide.type === 'image') {
+      return '<div class="hero-slide ' + (i === 0 ? 'active' : '') + '" data-index="' + i + '" style="background-image: url(\'' + slide.src + '\');"></div>';
+    } else {
+      return '<div class="hero-slide ' + (i === 0 ? 'active' : '') + '" data-index="' + i + '"><video class="w-full h-full object-cover" muted playsinline preload="auto"><source src="' + slide.src + '" type="video/mp4"></video></div>';
+    }
+  }).join('');
+
+  indicators.innerHTML = heroSlides.map((slide, i) => {
+    const isVideo = slide.type === 'video';
+    return '<button onclick="goToHeroSlide(' + i + ')" class="hero-dot ' + (i === 0 ? 'active' : '') + ' ' + (isVideo ? 'video-dot' : '') + '" data-index="' + i + '"><span class="dot-progress"></span></button>';
+  }).join('');
+
+  showHeroSlide(0);
+}
+
+function showHeroSlide(index) {
+  const slides = document.querySelectorAll('.hero-slide');
+  const dots = document.querySelectorAll('.hero-dot');
+  if (slides.length === 0) return;
+
+  if (heroSlideTimer) { clearTimeout(heroSlideTimer); heroSlideTimer = null; }
+
+  slides.forEach(function(s) {
+    const video = s.querySelector('video');
+    if (video) { video.pause(); video.currentTime = 0; }
+  });
+
+  slides.forEach(function(s) { s.classList.remove('active'); });
+  dots.forEach(function(d) {
+    d.classList.remove('active');
+    const progress = d.querySelector('.dot-progress');
+    if (progress) { progress.style.animation = 'none'; progress.style.width = '0%'; }
+  });
+
+  const currentSlideEl = slides[index];
+  if (currentSlideEl) currentSlideEl.classList.add('active');
+  const currentDot = dots[index];
+  if (currentDot) {
+    currentDot.classList.add('active');
+    const progress = currentDot.querySelector('.dot-progress');
+    if (progress) {
+      setTimeout(function() { progress.style.animation = ''; progress.style.width = ''; }, 10);
+    }
+  }
+
+  currentHeroSlide = index;
+
+  const slide = heroSlides[index];
+  if (slide.type === 'image') {
+    heroSlideTimer = setTimeout(function() { nextHeroSlide(); }, slide.duration);
+  } else if (slide.type === 'video') {
+    const video = currentSlideEl.querySelector('video');
+    if (video) {
+      if (heroVideoListener) {
+        video.removeEventListener('ended', heroVideoListener);
+      }
+
+      heroSlideTimer = setTimeout(function() { nextHeroSlide(); }, 15000);
+
+      heroVideoListener = function() {
+        if (heroSlideTimer) { clearTimeout(heroSlideTimer); heroSlideTimer = null; }
+        nextHeroSlide();
+      };
+      video.addEventListener('ended', heroVideoListener);
+
+      var metaListener = function() {
+        if (heroSlideTimer) clearTimeout(heroSlideTimer);
+        heroSlideTimer = setTimeout(function() { nextHeroSlide(); }, (video.duration + 2) * 1000);
+        video.removeEventListener('loadedmetadata', metaListener);
+      };
+      video.addEventListener('loadedmetadata', metaListener);
+
+      video.play().catch(function() {
+        if (heroSlideTimer) clearTimeout(heroSlideTimer);
+        heroSlideTimer = setTimeout(function() { nextHeroSlide(); }, 5000);
+      });
+    }
+  }
+}
+
+function nextHeroSlide() {
+  var next = (currentHeroSlide + 1) % heroSlides.length;
+  showHeroSlide(next);
+}
+
+function prevHeroSlide() {
+  var prev = (currentHeroSlide - 1 + heroSlides.length) % heroSlides.length;
+  showHeroSlide(prev);
+}
+
+function goToHeroSlide(index) {
+  showHeroSlide(index);
+}
+
+// ============================================
+// MENU DATA
+// ============================================
+const menuData = [
+  { id: 1, name: "Sop Tulang Komplit", price: 65000, category: "makanan", icon: "ph-bowl-food", desc: "Sop tulang komplit dengan daging melimpah" },
+  { id: 2, name: "Sop Tulang", price: 50000, category: "makanan", icon: "ph-bowl-food", desc: "Sop tulang sapi kuah gurih" },
+  { id: 3, name: "Rawon + Nasi", price: 46000, category: "makanan", icon: "ph-bowl-food", desc: "Rawon daging dengan nasi hangat" },
+  { id: 4, name: "Rawon", price: 40000, category: "makanan", icon: "ph-bowl-food", desc: "Rawon daging sapi khas Jawa Timur" },
+  { id: 5, name: "Nasi Rendang Sapi", price: 35000, category: "makanan", icon: "ph-bowl-food", desc: "Rendang sapi asli Padang" },
+  { id: 6, name: "Nasi Rendang Ayam", price: 33000, category: "makanan", icon: "ph-bowl-food", desc: "Rendang ayam juicy dan gurih" },
+  { id: 7, name: "Ayam Serundeng", price: 36000, category: "makanan", icon: "ph-bowl-food", desc: "Ayam goreng dengan serundeng kelapa" },
+  { id: 8, name: "Soto Ayam", price: 30000, category: "makanan", icon: "ph-bowl-food", desc: "Soto ayam kuning bening" },
+  { id: 9, name: "Nasi Goreng Lotus Special", price: 35000, category: "makanan", icon: "ph-bowl-food", desc: "Nasi goreng spesial dengan telur dan ayam" },
+  { id: 10, name: "Pisang Goreng Original", price: 12000, category: "cemilan", icon: "ph-cookie", desc: "Pisang goreng crispy" },
+  { id: 11, name: "Kentang Goreng", price: 15000, category: "cemilan", icon: "ph-cookie", desc: "Kentang goreng renyah dengan saus" },
+  { id: 12, name: "Mix Platter", price: 30000, category: "cemilan", icon: "ph-cookie", desc: "Campuran cemilan untuk sharing" },
+  { id: 13, name: "Roti Bakar", price: 20000, category: "cemilan", icon: "ph-cookie", desc: "Roti bakar dengan topping manis" },
+  { id: 14, name: "Dimsum", price: 18000, category: "cemilan", icon: "ph-cookie", desc: "Dimsum lembut dengan saus" },
+  { id: 15, name: "Cireng", price: 16000, category: "cemilan", icon: "ph-cookie", desc: "Cireng kenyal dengan rujak" },
+  { id: 16, name: "Lotus Coffee (M)", price: 28000, category: "coffee", icon: "ph-mug-saucer", desc: "Signature coffee kami, Medium size" },
+  { id: 17, name: "Lotus Coffee (L)", price: 33000, category: "coffee", icon: "ph-mug-saucer", desc: "Signature coffee kami, Large size" },
+  { id: 18, name: "Cheese Cake Latte", price: 32000, category: "coffee", icon: "ph-mug-saucer", desc: "Perpaduan coffee dengan cheese cake" },
+  { id: 19, name: "Butterscotch Aren Latte", price: 33000, category: "coffee", icon: "ph-mug-saucer", desc: "Latte dengan butterscotch dan gula aren" },
+  { id: 20, name: "Pistachio Latte", price: 35000, category: "coffee", icon: "ph-mug-saucer", desc: "Latte dengan pistachio creamy" },
+  { id: 21, name: "Kopi Susu Gula Aren", price: 25000, category: "coffee", icon: "ph-mug-saucer", desc: "Kopi susu dengan gula aren asli" },
+  { id: 22, name: "Americano", price: 22000, category: "coffee", icon: "ph-mug-saucer", desc: "Espresso dengan air panas" },
+  { id: 23, name: "Lotus Chocolate", price: 28000, category: "choco", icon: "ph-mug-saucer", desc: "Chocolate signature kami" },
+  { id: 24, name: "Milo", price: 22000, category: "choco", icon: "ph-mug-saucer", desc: "Minuman cokelat Milo dingin" },
+  { id: 25, name: "Lotus Matcha", price: 30000, category: "matcha", icon: "ph-leaf", desc: "Matcha signature kami" },
+  { id: 26, name: "Milk Matcha", price: 27000, category: "matcha", icon: "ph-leaf", desc: "Matcha dengan susu segar" },
+  { id: 27, name: "Pistachio Matcha", price: 35000, category: "matcha", icon: "ph-leaf", desc: "Matcha dengan pistachio" },
+  { id: 28, name: "Mangga Yakult", price: 25000, category: "yakult", icon: "ph-cup-straw", desc: "Jus mangga dengan yakult" },
+  { id: 29, name: "Orange Squash", price: 23000, category: "yakult", icon: "ph-cup-straw", desc: "Squash jeruk segar" },
+  { id: 30, name: "Melon Squash", price: 23000, category: "yakult", icon: "ph-cup-straw", desc: "Squash melon manis" },
+  { id: 31, name: "Honey Lemon Tea", price: 23000, category: "tea", icon: "ph-cup-straw", desc: "Teh dengan madu dan lemon" },
+  { id: 32, name: "Thai Tea", price: 25000, category: "tea", icon: "ph-cup-straw", desc: "Teh Thailand autentik" },
+  { id: 33, name: "Hot Coffee", price: 20000, category: "hot", icon: "ph-mug-saucer", desc: "Kopi panas hangat menenangkan" },
+  { id: 34, name: "Hot Matcha", price: 25000, category: "hot", icon: "ph-mug-saucer", desc: "Matcha latte hangat" },
+  { id: 35, name: "Wedang Jahe", price: 18000, category: "hot", icon: "ph-mug-saucer", desc: "Wedang jahe tradisional" },
+  { id: 36, name: "Nasi Putih", price: 5000, category: "tambahan", icon: "ph-bowl-food", desc: "Nasi putih hangat" },
+  { id: 37, name: "Bir Bintang", price: 28000, category: "tambahan", icon: "ph-bottle", desc: "Bir Bintang dingin" },
+  { id: 38, name: "Heineken", price: 35000, category: "tambahan", icon: "ph-bottle", desc: "Bir Heineken dingin" },
+  { id: 39, name: "Guinness", price: 45000, category: "tambahan", icon: "ph-bottle", desc: "Guinness stout" },
+];
+
+// Recommended menu - hanya untuk carousel display
+const recommendedMenu = [
+  { name: "Lotus Coffee", image: "https://lotuscoffee.store/asset/img/11.jpg", desc: "Signature coffee kami dengan perpaduan rasa yang sempurna" },
+  { name: "Lotus Matcha", image: "https://lotuscoffee.store/asset/img/12.jpg", desc: "Matcha premium dengan sentuhan khas Lotus" },
+  { name: "Lotus Chocolate", image: "https://lotuscoffee.store/asset/img/13.jpg", desc: "Chocolate creamy yang memanjakan lidah" },
+];
+
+// ============================================
+// STATE
+// ============================================
+let cart = JSON.parse(localStorage.getItem('lotusCart') || '[]');
+let currentCatalogCategory = 'all';
+let searchQuery = '';
+
+function formatRupiah(num) {
+  return 'Rp ' + num.toLocaleString('id-ID');
+}
+
+// ============================================
+// SPA NAVIGATION
+// ============================================
+function navigateTo(view, btn) {
+  document.querySelectorAll('.view').forEach(function(v) { v.classList.add('hidden'); });
+  var target = document.getElementById('view-' + view);
+  if (target) {
+    target.classList.remove('hidden');
+    target.style.animation = 'none';
+    setTimeout(function() { target.style.animation = ''; }, 10);
+  }
+
+  document.querySelectorAll('.nav-item').forEach(function(n) { n.classList.remove('active'); });
+  if (btn) {
+    btn.classList.add('active');
+  } else {
+    var activeNav = document.querySelector('[data-nav="' + view + '"]');
+    if (activeNav) activeNav.classList.add('active');
+  }
+
+  window.scrollTo({ top: 0, behavior: 'auto' });
+
+  if (view === 'cart') { renderCartItems(); }
+
+  setTimeout(function() { if (window.AOS) AOS.refresh(); }, 100);
+}
+
+function navToSection(sectionId, btn) {
+  navigateTo('landing', btn);
+  setTimeout(function() {
+    var section = document.getElementById(sectionId);
+    if (section) { section.scrollIntoView({ behavior: 'auto' }); }
+  }, 150);
+}
+
+// ============================================
+// AUTO INFINITE CAROUSEL - Rekomendasi Menu
+// Hanya menampilkan: Gambar, Nama, Keterangan
+// ============================================
+function renderRecommendedSlider() {
+  var track = document.getElementById('recom-track');
+  if (!track) return;
+
+  // Duplicate items untuk seamless loop
+  var items = recommendedMenu.concat(recommendedMenu);
+
+  track.innerHTML = items.map(function(item) {
+    return '<div class="carousel-card">' +
+      '<div class="menu-card bg-white rounded-3xl overflow-hidden shadow-lg border border-pink-100">' +
+        '<div class="relative h-56 md:h-64 overflow-hidden bg-gradient-to-br from-pink-400 to-pink-700 flex items-center justify-center">' +
+          '<i class="ph-fill ph-coffee absolute text-white/30 text-7xl"></i>' +
+          '<img src="' + item.image + '" alt="' + item.name + '" class="w-full h-full object-cover relative z-10" onerror="this.style.display=\'none\'">' +
+          '<div class="absolute top-3 left-3 bg-pink-600 text-white px-3 py-1 rounded-full text-[11px] font-bold flex items-center gap-1 shadow z-20">' +
+            '<i class="ph-fill ph-star"></i> RECOMMENDED' +
+          '</div>' +
+        '</div>' +
+        '<div class="p-5">' +
+          '<h3 class="font-display text-xl font-bold text-pink-900 mb-2">' + item.name + '</h3>' +
+          '<p class="text-sm text-gray-600 leading-snug">' + item.desc + '</p>' +
+        '</div>' +
+      '</div>' +
+    '</div>';
+  }).join('');
+}
+
+// ============================================
+// CATALOG GRID
+// ============================================
+function renderCatalog() {
+  var grid = document.getElementById('menu-grid');
+  if (!grid) return;
+
+  var filtered = menuData;
+
+  if (currentCatalogCategory !== 'all') {
+    filtered = filtered.filter(function(item) { return item.category === currentCatalogCategory; });
+  }
+
+  if (searchQuery) {
+    filtered = filtered.filter(function(item) {
+      return item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+             item.desc.toLowerCase().includes(searchQuery.toLowerCase());
+    });
+  }
+
+  if (filtered.length === 0) {
+    grid.innerHTML = '<div class="col-span-full text-center py-16"><i class="ph ph-magnifying-glass text-pink-200 text-6xl mb-4"></i><p class="text-gray-500">Menu tidak ditemukan</p></div>';
+    return;
+  }
+
+  var gradMap = {
+    makanan: 'grad-food', cemilan: 'grad-snack', coffee: 'grad-coffee',
+    choco: 'grad-choco', matcha: 'grad-matcha', yakult: 'grad-yakult',
+    tea: 'grad-tea', hot: 'grad-hot', tambahan: 'grad-tambahan',
+  };
+
+  grid.innerHTML = filtered.map(function(item, i) {
+    var inCart = cart.find(function(c) { return c.id === item.id; });
+    var qty = inCart ? inCart.qty : 0;
+    return '<div data-aos="fade-up" data-aos-delay="' + ((i % 8) * 50) + '" class="menu-card bg-white rounded-2xl md:rounded-3xl overflow-hidden shadow border border-pink-100 flex flex-col">' +
+      '<div class="' + (gradMap[item.category] || 'grad-coffee') + ' h-28 md:h-32 flex items-center justify-center relative">' +
+        '<i class="ph-fill ' + item.icon + ' text-white/85 text-5xl md:text-6xl"></i>' +
+        (qty > 0 ? '<div class="absolute top-2 right-2 bg-white text-pink-600 font-bold text-xs w-6 h-6 rounded-full flex items-center justify-center shadow-md">' + qty + '</div>' : '') +
+      '</div>' +
+      '<div class="p-3 md:p-4 flex-1 flex flex-col">' +
+        '<h3 class="font-bold text-pink-900 text-xs md:text-sm leading-tight mb-1">' + item.name + '</h3>' +
+        '<p class="text-[11px] md:text-xs text-gray-500 mb-3 line-clamp-2 flex-1">' + item.desc + '</p>' +
+        '<div class="flex items-center justify-between gap-2">' +
+          '<span class="font-bold text-pink-600 text-sm md:text-base">' + formatRupiah(item.price) + '</span>' +
+          '<button onclick="addToCart(' + item.id + ', this)" class="bg-pink-600 hover:bg-pink-700 text-white w-8 h-8 rounded-full flex items-center justify-center transition flex-shrink-0 btn-add shadow">' +
+            '<i class="ph-bold ph-plus text-sm"></i>' +
+          '</button>' +
+        '</div>' +
+      '</div>' +
+    '</div>';
+  }).join('');
+
+  setTimeout(function() { if (window.AOS) AOS.refresh(); }, 100);
+}
+
+function filterCatalog(btn, cat) {
+  currentCatalogCategory = cat;
+  document.querySelectorAll('.cat-filter').forEach(function(b) {
+    b.classList.remove('active', 'bg-pink-600', 'text-white');
+    b.classList.add('bg-white', 'border', 'border-pink-200', 'text-pink-900');
+  });
+  if (btn) {
+    btn.classList.add('active', 'bg-pink-600', 'text-white');
+    btn.classList.remove('bg-white', 'border', 'border-pink-200', 'text-pink-900');
+  }
+  renderCatalog();
+}
+
+function filterCategory(btn, cat) {
+  document.querySelectorAll('.cat-chip').forEach(function(b) {
+    b.classList.remove('active', 'bg-pink-600', 'text-white');
+    b.classList.add('bg-white', 'border', 'border-pink-200', 'text-pink-900');
+  });
+  if (btn) {
+    btn.classList.add('active', 'bg-pink-600', 'text-white');
+    btn.classList.remove('bg-white', 'border', 'border-pink-200', 'text-pink-900');
+  }
+}
+
+// ============================================
+// CART SYSTEM
+// ============================================
+function addToCart(id, btn) {
+  var item = menuData.find(function(m) { return m.id === id; });
+  if (!item) return;
+
+  var existing = cart.find(function(c) { return c.id === id; });
+  if (existing) {
+    existing.qty++;
+  } else {
+    cart.push({ id: item.id, name: item.name, price: item.price, icon: item.icon, category: item.category, desc: item.desc, qty: 1 });
+  }
+
+  saveCart();
+  updateCartUI();
+  renderCatalog();
+  showToast(item.name + ' ditambahkan!');
+
+  if (btn) {
+    var originalHTML = btn.innerHTML;
+    btn.innerHTML = '<i class="ph-bold ph-check"></i>';
+    btn.classList.add('bg-green-500');
+    btn.classList.remove('bg-pink-600', 'hover:bg-pink-700');
+    setTimeout(function() {
+      btn.innerHTML = originalHTML;
+      btn.classList.remove('bg-green-500');
+      btn.classList.add('bg-pink-600', 'hover:bg-pink-700');
+    }, 800);
+  }
+
+  var badgeMobile = document.getElementById('cart-count-mobile');
+  var badgeDesktop = document.getElementById('cart-count-desktop');
+  if (badgeMobile) { badgeMobile.classList.add('pulse-pink'); setTimeout(function() { badgeMobile.classList.remove('pulse-pink'); }, 2000); }
+  if (badgeDesktop) { badgeDesktop.classList.add('pulse-pink'); setTimeout(function() { badgeDesktop.classList.remove('pulse-pink'); }, 2000); }
+}
+
+function removeFromCart(id) {
+  cart = cart.filter(function(c) { return c.id !== id; });
+  saveCart();
+  updateCartUI();
+  renderCartItems();
+  renderCatalog();
+}
+
+function updateQty(id, delta) {
+  var item = cart.find(function(c) { return c.id === id; });
+  if (!item) return;
+  item.qty += delta;
+  if (item.qty <= 0) { removeFromCart(id); return; }
+  saveCart();
+  updateCartUI();
+  renderCartItems();
+  renderCatalog();
+}
+
+function saveCart() {
+  try { localStorage.setItem('lotusCart', JSON.stringify(cart)); } catch (e) { console.error('Failed to save cart:', e); }
+}
+
+function updateCartUI() {
+  var totalQty = cart.reduce(function(sum, item) { return sum + item.qty; }, 0);
+  var countDesktop = document.getElementById('cart-count-desktop');
+  var countMobile = document.getElementById('cart-count-mobile');
+  if (countDesktop) countDesktop.textContent = totalQty;
+  if (countMobile) countMobile.textContent = totalQty;
+}
+
+function renderCartItems() {
+  var container = document.getElementById('cart-items');
+  var emptyCart = document.getElementById('empty-cart');
+  var cartContent = document.getElementById('cart-content');
+  if (!container || !emptyCart || !cartContent) return;
+
+  if (cart.length === 0) {
+    emptyCart.classList.remove('hidden');
+    cartContent.classList.add('hidden');
+    return;
+  }
+
+  emptyCart.classList.add('hidden');
+  cartContent.classList.remove('hidden');
+
+  container.innerHTML = cart.map(function(item) {
+    return '<div class="bg-white rounded-2xl p-3 md:p-4 shadow border border-pink-100 flex items-center gap-3 md:gap-4">' +
+      '<div class="w-14 h-14 md:w-16 md:h-16 rounded-2xl bg-gradient-to-br from-pink-100 to-pink-200 flex items-center justify-center flex-shrink-0">' +
+        '<i class="ph-fill ' + item.icon + ' text-pink-600 text-2xl md:text-3xl"></i>' +
+      '</div>' +
+      '<div class="flex-1 min-w-0">' +
+        '<h4 class="font-bold text-pink-900 text-xs md:text-sm truncate">' + item.name + '</h4>' +
+        '<p class="text-pink-600 font-bold text-xs md:text-sm">' + formatRupiah(item.price) + '</p>' +
+      '</div>' +
+      '<div class="flex items-center gap-1.5 md:gap-2 flex-shrink-0">' +
+        '<button onclick="updateQty(' + item.id + ', -1)" class="w-7 h-7 md:w-8 md:h-8 rounded-full bg-pink-100 text-pink-900 hover:bg-pink-200 flex items-center justify-center transition">' +
+          '<i class="ph-bold ph-minus text-xs"></i>' +
+        '</button>' +
+        '<span class="font-bold text-pink-900 w-6 md:w-8 text-center text-sm">' + item.qty + '</span>' +
+        '<button onclick="updateQty(' + item.id + ', 1)" class="w-7 h-7 md:w-8 md:h-8 rounded-full bg-pink-600 text-white hover:bg-pink-700 flex items-center justify-center transition">' +
+          '<i class="ph-bold ph-plus text-xs"></i>' +
+        '</button>' +
+        '<button onclick="removeFromCart(' + item.id + ')" class="w-7 h-7 md:w-8 md:h-8 rounded-full bg-red-50 text-red-500 hover:bg-red-100 flex items-center justify-center transition ml-1">' +
+          '<i class="ph-bold ph-trash text-xs"></i>' +
+        '</button>' +
+      '</div>' +
+    '</div>';
+  }).join('');
+
+  var subtotal = cart.reduce(function(sum, item) { return sum + (item.price * item.qty); }, 0);
+  var tax = Math.round(subtotal * 0.1);
+  var total = subtotal + tax;
+
+  var subEl = document.getElementById('subtotal');
+  var taxEl = document.getElementById('tax');
+  var totalEl = document.getElementById('total');
+  if (subEl) subEl.textContent = formatRupiah(subtotal);
+  if (taxEl) taxEl.textContent = formatRupiah(tax);
+  if (totalEl) totalEl.textContent = formatRupiah(total);
+}
+
+// ============================================
+// WHATSAPP CHECKOUT
+// ============================================
+function checkout() {
+  if (cart.length === 0) { showToast('Keranjang masih kosong!'); return; }
+
+  var notesEl = document.getElementById('order-notes');
+  var notes = notesEl ? notesEl.value : '-';
+  var subtotal = cart.reduce(function(sum, item) { return sum + (item.price * item.qty); }, 0);
+  var tax = Math.round(subtotal * 0.1);
+  var total = subtotal + tax;
+
+  var message = '*LOTUS COFFEE - PESANAN*\n';
+  message += '======================\n';
+  message += 'Daftar Pesanan:\n\n';
+
+  cart.forEach(function(item, i) {
+    message += (i + 1) + '. ' + item.name + '\n';
+    message += '   ' + item.qty + ' x ' + formatRupiah(item.price) + ' = ' + formatRupiah(item.price * item.qty) + '\n\n';
+  });
+
+  message += '======================\n';
+  message += 'Subtotal: ' + formatRupiah(subtotal) + '\n';
+  message += 'PPN (10%): ' + formatRupiah(tax) + '\n';
+  message += '*Total: ' + formatRupiah(total) + '*\n\n';
+  message += 'Catatan: ' + notes + '\n\n';
+  message += 'Terima kasih! Mohon konfirmasi pesanan saya.';
+
+  var encoded = encodeURIComponent(message);
+  window.open('https://wa.me/6285751446110?text=' + encoded, '_blank');
+}
+
+// ============================================
+// TOAST
+// ============================================
+var toastTimer = null;
+function showToast(msg) {
+  var toast = document.getElementById('toast');
+  var toastMsg = document.getElementById('toast-msg');
+  if (!toast || !toastMsg) return;
+
+  toastMsg.textContent = msg;
+  toast.classList.remove('hidden');
+  toast.classList.add('toast-enter');
+
+  if (toastTimer) clearTimeout(toastTimer);
+  toastTimer = setTimeout(function() {
+    toast.classList.add('hidden');
+    toast.classList.remove('toast-enter');
+  }, 2500);
+}
+
+// ============================================
+// INIT
+// ============================================
+document.addEventListener('DOMContentLoaded', function() {
+  var searchInput = document.getElementById('search-input');
+  if (searchInput) {
+    searchInput.addEventListener('input', function(e) {
+      searchQuery = e.target.value;
+      renderCatalog();
+    });
+  }
+
+  if (window.AOS) {
+    AOS.init({ duration: 800, easing: 'ease-out-cubic', once: true, offset: 50 });
+  }
+
+  initHeroSlider();
+  renderRecommendedSlider();
+  renderCatalog();
+  updateCartUI();
+  renderCartItems();
+
+  var berandaNav = document.querySelector('[data-nav="landing"]');
+  if (berandaNav) berandaNav.classList.add('active');
+});
+
+<!-- TEXT WRITTER -->
+
+// typing
+const text = "LOTUS COFFEE"; // Teks yang akan dianimasikan
+let index = 0;
+let isDeleting = false;
+const speed = 100; // Kecepatan mengetik
+const delayBeforeDeleting = 3000; // Waktu jeda sebelum menghapus
+const delayBeforeTypingAgain = 500; // Waktu jeda sebelum mengetik ulang
+
+function typeText() {
+  const typingTextElement = document.getElementById("typing-text");
+
+  if (isDeleting) {
+    typingTextElement.innerHTML = text.substring(0, index);
+    index--;
+    if (index < 0) {
+      isDeleting = false;
+      setTimeout(typeText, delayBeforeTypingAgain);
+    } else {
+      setTimeout(typeText, speed / 2); // Lebih cepat saat menghapus
+    }
+  } else {
+    typingTextElement.innerHTML = text.substring(0, index);
+    index++;
+    if (index > text.length) {
+      isDeleting = true;
+      setTimeout(typeText, delayBeforeDeleting); // Jeda sebelum mulai menghapus
+    } else {
+      setTimeout(typeText, speed); // Kecepatan mengetik
+    }
+  }
+}
+
+window.onload = function () {
+  setTimeout(typeText, delayBeforeTypingAgain); // Mulai mengetik setelah jeda
+};
+</script>
+</body>
+</html>
